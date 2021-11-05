@@ -13,6 +13,10 @@ sap.ui.define([
             const paramModel = new JSONModel();
             paramModel.loadData("./localService/mockdata/params.json", false);
             this.getView().setModel(paramModel, "paramModel");
+
+            const chartsModel = new JSONModel();
+            chartsModel.loadData("./localService/mockdata/chartOfAccounts.json", false);
+            this.getView().setModel(chartsModel, "chartsModel");
         }
 
         function onBeforeRendering() {
@@ -38,16 +42,10 @@ sap.ui.define([
             }
         }
 
-        function onVerif(oEvent) {
-            const datos1 = this.getView().getModel("paramModel");
-            const datos2 = datos1.getData();
-        }
-
         let Main = Controller.extend("egb.sapui5.controller.Main", {});
         Main.prototype.onInit = onInit;
         Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onValidateNameDescription = onValidateNameDescription;
-        Main.prototype.onVerif = onVerif;
 
         return Main;
     });

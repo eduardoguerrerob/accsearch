@@ -1,6 +1,7 @@
 <mvc:View controllerName="egb.sapui5.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
+    xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
     xmlns="sap.m">
 
@@ -18,7 +19,8 @@
                         <form:SimpleForm editable="true">
                             <Label text="{i18n>employeeName}"
                                 class="sapUiTinyMargin"/>
-                            <Input id="employeeName" value="{paramModel>/employeeName}"
+                            <Input id="employeeName"
+                                value="{paramModel>/employeeName}"
                                 placeholder="{i18n>namePlaceHolder}"
                                 width="300px"
                                 class="sapUiTinyMargin"
@@ -41,8 +43,18 @@
                         title="{i18n>step2}"
                         validated="false">
                         <MessageStrip text="{i18n>step2message}"/>
-                        <Text text="PASO2"></Text>
-                        <Button text="verificar modelo" press="onVerif"></Button>
+                        <form:SimpleForm editable="true">
+                            <Label text="{i18n>chartOfAccounts}"/>
+                            <Select forceSelection="true"
+                                selectedKey="{chartsModel>/selectedChart}"
+                                items="{chartsModel>/charts}"
+                                width="200px">
+                                <items>
+                                    <core:Item key="{chartsModel>id}"
+                                               text="{chartsModel>name}" />
+                                </items>
+                            </Select>
+                        </form:SimpleForm>
                     </WizardStep>
                     <WizardStep id="step3"
                         title="{i18n>step3}"
