@@ -1,0 +1,64 @@
+<mvc:View controllerName="egb.sapui5.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m">
+
+    <Page id="page"
+        title="{i18n>title}">
+        <content>
+            <NavContainer id="wizardNavContainer">
+                <Wizard id="wizard"
+                    complete="wizardCompletedHandler"
+                    finishButtonText="{i18n>finalBtn}">
+                    <WizardStep id="step1"
+                        title="{i18n>step1}"
+                        validated="false">
+                        <MessageStrip text="{i18n>step1message}"/>
+                        <form:SimpleForm editable="true">
+                            <Label text="{i18n>employeeName}"
+                                class="sapUiTinyMargin"/>
+                            <Input id="employeeName" value="{paramModel>/employeeName}"
+                                placeholder="{i18n>namePlaceHolder}"
+                                width="300px"
+                                class="sapUiTinyMargin"
+                                liveChange="onValidateNameDescription"/>
+                            <Label text="{i18n>description}"
+                                class="sapUiTinyMargin"/>
+                            <TextArea 
+                                id = "description"
+                                value="{paramModel>/description}"
+                                valueLiveUpdate="true"
+                                liveChange="onValidateNameDescription"
+                                maxLength="150"
+                                showExceededText="true"
+                                valueState="{= ${paramModel>/description}.length > 120 ? 'Warning' : 'None' }"
+                                class="sapUiTinyMargin"
+                                width="80%" />
+                        </form:SimpleForm>
+                    </WizardStep>
+                    <WizardStep id="step2"
+                        title="{i18n>step2}"
+                        validated="false">
+                        <MessageStrip text="{i18n>step2message}"/>
+                        <Text text="PASO2"></Text>
+                        <Button text="verificar modelo" press="onVerif"></Button>
+                    </WizardStep>
+                    <WizardStep id="step3"
+                        title="{i18n>step3}"
+                        validated="false">
+                        <MessageStrip text="{i18n>step3message}"/>
+                        <Text text="PASO3"></Text>
+                    </WizardStep>
+                    <WizardStep id="step4"
+                        title="{i18n>step4}"
+                        validated="false">
+                        <MessageStrip text="{i18n>step4message}"/>
+                        <Text text="PASO4"></Text>
+                    </WizardStep>
+                </Wizard>
+            </NavContainer>
+        </content>
+    </Page>
+
+</mvc:View>
