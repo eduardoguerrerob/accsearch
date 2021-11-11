@@ -25,14 +25,14 @@
                                 placeholder="{i18n>namePlaceHolder}"
                                 width="300px"
                                 class="sapUiTinyMargin"
-                                liveChange="onValidateNameDescription"/>
+                                liveChange="onValidateStep1"/>
                             <Label text="{i18n>description}"
                                 class="sapUiTinyMargin"/>
                             <TextArea 
                                 id = "description"
                                 value="{paramModel>/description}"
                                 valueLiveUpdate="true"
-                                liveChange="onValidateNameDescription"
+                                liveChange="onValidateStep1"
                                 maxLength="150"
                                 showExceededText="true"
                                 valueState="{= ${paramModel>/description}.length > 120 ? 'Warning' : 'None' }"
@@ -49,15 +49,15 @@
                             <Select forceSelection="false"
                                 selectedKey="{chartsModel>/selectedChart}"
                                 items="{chartsModel>/charts}"
-                                width="200px">
+                                width="200px"
+                                change="onValidateChart">
                                 <items>
                                     <core:Item key="{chartsModel>id}"
                                         text="{chartsModel>name}" />
                                 </items>
                             </Select>
                             <Label text="{i18n>accountGroups}"/>
-                            <MultiComboBox 
-                                selectionChange="handleSelectionChange"
+                            <MultiComboBox selectionChange="handleSelectionChange"
                                 selectionFinish="handleSelectionFinish"
                                 width="350px"
                                 items="{groupsModel>/groups}">
@@ -65,14 +65,20 @@
                                     text="{groupsModel>description}"/>
                             </MultiComboBox>
                             <Label text="{i18n>currency}"/>
-                            <Select
-                                forceSelection="false"
+                            <Select forceSelection="false"
                                 selectedKey="{currModel>/selectedCurrency}"
                                 items="{currModel>/currencies}"
-                                width="200px">
+                                width="200px"
+                                change="onValidateCurrency">
+                                <items>
                                     <core:Item key="{currModel>id}"
-                                          text="{currModel>name}"/>
+                                        text="{currModel>name}"/>
+                                </items>
                             </Select>
+                            <Label text="´{i18n>/date}"/>
+                            <DatePicker id="date"
+                                placeholder="{i18n>selectDate}"
+                                change="onValidateDate"/>
                         </form:SimpleForm>
                     </WizardStep>
                     <WizardStep id="step3"
