@@ -17,6 +17,14 @@ sap.ui.define([
             const chartsModel = new JSONModel();
             chartsModel.loadData("./localService/mockdata/chartOfAccounts.json", false);
             this.getView().setModel(chartsModel, "chartsModel");
+
+            const groupsModel = new JSONModel();
+            groupsModel.loadData("./localService/mockdata/accountGroups.json", false);
+            this.getView().setModel(groupsModel, "groupsModel");
+
+            const currModel = new JSONModel();
+            currModel.loadData("./localService/mockdata/currency.json", false);
+            this.getView().setModel(currModel, "currModel");
         }
 
         function onBeforeRendering() {
@@ -42,10 +50,43 @@ sap.ui.define([
             }
         }
 
+        function handleSelectionChange(oEvent) {
+			var changedItem = oEvent.getParameter("changedItem");
+			var isSelected = oEvent.getParameter("selected");
+
+			if (!isSelected) {
+			
+            }
+        }
+        
+        function handleSelectionFinish(oEvent) {
+            const oModel = this.getView().getModel("groupsModel");
+            const paramModel = this.getView().getModel("paramModel");
+            let groups = [];
+            oModel.setProperty("selectedGroups", []);
+			var selectedItems = oEvent.getParameter("selectedItems");
+			for (var i in selectedItems) {
+					groups.push(selectedItems[i].getKey());
+            }
+            
+            oModel.setProperty("/selectedGroups", groups);
+            paramModel.setProperty("/groups", groups)
+            oModel.refresh();
+
+            const selectedGroups = oModel.getData().selectedGroups;
+            const groupsTest = paramModel.getData().groups;
+        }
+        
+        function _validateStep2Complete(){
+            
+        }
+
         let Main = Controller.extend("egb.sapui5.controller.Main", {});
         Main.prototype.onInit = onInit;
         Main.prototype.onBeforeRendering = onBeforeRendering;
         Main.prototype.onValidateNameDescription = onValidateNameDescription;
+        Main.prototype.handleSelectionChange = handleSelectionChange;
+        Main.prototype.handleSelectionFinish =handleSelectionFinish;
 
         return Main;
     });

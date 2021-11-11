@@ -3,6 +3,7 @@
     displayBlock="true"
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
     xmlns="sap.m">
 
     <Page id="page"
@@ -45,14 +46,32 @@
                         <MessageStrip text="{i18n>step2message}"/>
                         <form:SimpleForm editable="true">
                             <Label text="{i18n>chartOfAccounts}"/>
-                            <Select forceSelection="true"
+                            <Select forceSelection="false"
                                 selectedKey="{chartsModel>/selectedChart}"
                                 items="{chartsModel>/charts}"
                                 width="200px">
                                 <items>
                                     <core:Item key="{chartsModel>id}"
-                                               text="{chartsModel>name}" />
+                                        text="{chartsModel>name}" />
                                 </items>
+                            </Select>
+                            <Label text="{i18n>accountGroups}"/>
+                            <MultiComboBox 
+                                selectionChange="handleSelectionChange"
+                                selectionFinish="handleSelectionFinish"
+                                width="350px"
+                                items="{groupsModel>/groups}">
+                                <core:Item key="{groupsModel>id}"
+                                    text="{groupsModel>description}"/>
+                            </MultiComboBox>
+                            <Label text="{i18n>currency}"/>
+                            <Select
+                                forceSelection="false"
+                                selectedKey="{currModel>/selectedCurrency}"
+                                items="{currModel>/currencies}"
+                                width="200px">
+                                    <core:Item key="{currModel>id}"
+                                          text="{currModel>name}"/>
                             </Select>
                         </form:SimpleForm>
                     </WizardStep>
