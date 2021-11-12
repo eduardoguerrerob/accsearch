@@ -85,7 +85,13 @@
                         title="{i18n>step3}"
                         validated="false">
                         <MessageStrip text="{i18n>step3message}"/>
-                        <Text text="PASO3"></Text>
+                        <List id="fieldList"
+                            items="{fieldsModel>/fields}"
+                            mode="MultiSelect">
+                            <items>
+                                <ObjectListItem title="{fieldsModel>id} {fieldsModel>name}"/>
+                            </items>
+                        </List>
                     </WizardStep>
                     <WizardStep id="step4"
                         title="{i18n>step4}"

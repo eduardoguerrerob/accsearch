@@ -14,6 +14,7 @@ sap.ui.define([
         const chartsModel = new JSONModel();
         const groupsModel = new JSONModel();
         const currModel = new JSONModel();
+        const fieldsModel = new JSONModel();
 
         function onInit() {
             paramModel.loadData("./localService/mockdata/params.json", false);
@@ -27,6 +28,9 @@ sap.ui.define([
             
             currModel.loadData("./localService/mockdata/currency.json", false);
             this.getView().setModel(currModel, "currModel");
+
+            fieldsModel.loadData("./localService/mockdata/fields.json");
+            this.getView().setModel(fieldsModel, "fieldsModel");
         }
 
         function onBeforeRendering() {
@@ -59,7 +63,7 @@ sap.ui.define([
         function onValidateChart(oEvent){
             const chart = chartsModel.getProperty("/selectedChart");
             paramModel.setProperty("/chart", chart);
-           _validateStep2Complete();
+           _validateStep2Complete(this);
         }
 
         function handleSelectionChange(oEvent) {
@@ -78,13 +82,13 @@ sap.ui.define([
             }
             groupsModel.setProperty("/selectedGroups", groups);
             paramModel.setProperty("/groups", groups);
-            _validateStep2Complete();
+            _validateStep2Complete(this);
         }
 
         function onValidateCurrency(oEvent){
             const currency = currModel.getProperty("/selectedCurrency");
             paramModel.setProperty("/currency", currency);
-            _validateStep2Complete();
+            _validateStep2Complete(this);
         }
 
         function onValidateDate(oEvent){
@@ -99,9 +103,9 @@ sap.ui.define([
             }
         }
 
-        function _validateStep2Complete(){
+        function _validateStep2Complete(that){
 
-            // this._wizard = this.byId("wizard");
+            // that._wizard = that.byId("wizard");
             // this._oFirstStep = this._wizard.getSteps()[0];
             // this._oSecondStep = this._wizard.getSteps()[1];
             // this._oThirdStep = this._wizard.getSteps()[2];
@@ -112,17 +116,17 @@ sap.ui.define([
             const selectedCurrency = currModel.getProperty("/selectedCurrency");
             const params = paramModel.getData();
 
-            if( params.employeeName !== undefined &&
-                params.description !== undefined &&
-                params.date !== undefined &&
-                params.chart !== undefined &&
-                params.groups !== undefined &&
-                params.currency !== undefined ){
-                    // this._oSecondStep.setValidated(true);
-                    // this._wizard.goToStep(this._oThirdStep);
+            if( params.employeeName !== undefined && params.employeeName !== "" &&
+                params.description !== undefined && params.description !== "" &&
+                params.date !== undefined && params.date !== "" &&
+                params.chart !== undefined &&  params.chart !== "" &&
+                params.groups !== undefined && params.groups.length > 0 &&
+                params.currency !== undefined && params.currency !== "" ){
+                    that._oSecondStep.setValidated(true);
+                    that._wizard.goToStep(that._oThirdStep);
                 }
                 else{
-                    // this._oSecondStep.setValidated(false);
+                    that._oSecondStep.setValidated(false);
                 }
         }
 
