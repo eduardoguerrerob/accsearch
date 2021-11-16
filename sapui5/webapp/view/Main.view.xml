@@ -1,4 +1,5 @@
-<mvc:View controllerName="egb.sapui5.controller.Main"
+<mvc:View xmlns:table="sap.ui.table"
+    controllerName="egb.sapui5.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns:core="sap.ui.core"
@@ -85,13 +86,29 @@
                         title="{i18n>step3}"
                         validated="false">
                         <MessageStrip text="{i18n>step3message}"/>
-                        <List id="fieldList"
-                            items="{fieldsModel>/fields}"
-                            mode="MultiSelect">
+                        <!-- 
+                        <List id="fieldList" items="{fieldsModel>/fields}" mode="MultiSelect">
                             <items>
                                 <ObjectListItem title="{fieldsModel>id} {fieldsModel>name}"/>
                             </items>
                         </List>
+                        -->
+                        <table:Table id="fieldsTable"
+                            rows="{fieldsModel>/fields}"
+                            selectionMode="MultiToggle"
+                            visibleRowCount="5"
+                            width="30%"
+                            rowSelectionChange="aaa">
+                            <table:columns>
+                                <table:Column width="11rem">
+                                    <Label text="{i18n>nameField}" />
+                                    <table:template>
+                                        <Text text="{fieldsModel>name}"
+                                            wrapping="false" />
+                                    </table:template>
+                                </table:Column>
+                            </table:columns>
+                        </table:Table>
                     </WizardStep>
                     <WizardStep id="step4"
                         title="{i18n>step4}"

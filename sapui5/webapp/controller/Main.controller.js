@@ -19,13 +19,13 @@ sap.ui.define([
         function onInit() {
             paramModel.loadData("./localService/mockdata/params.json", false);
             this.getView().setModel(paramModel, "paramModel");
-            
+
             chartsModel.loadData("./localService/mockdata/chartOfAccounts.json", false);
             this.getView().setModel(chartsModel, "chartsModel");
-            
+
             groupsModel.loadData("./localService/mockdata/accountGroups.json", false);
             this.getView().setModel(groupsModel, "groupsModel");
-            
+
             currModel.loadData("./localService/mockdata/currency.json", false);
             this.getView().setModel(currModel, "currModel");
 
@@ -60,50 +60,51 @@ sap.ui.define([
             }
         }
 
-        function onValidateChart(oEvent){
+        function onValidateChart(oEvent) {
             const chart = chartsModel.getProperty("/selectedChart");
             paramModel.setProperty("/chart", chart);
-           _validateStep2Complete(this);
+            _validateStep2Complete(this);
         }
 
         function handleSelectionChange(oEvent) {
-			var changedItem = oEvent.getParameter("changedItem");
-			var isSelected = oEvent.getParameter("selected");
-			if (!isSelected) {
+            var changedItem = oEvent.getParameter("changedItem");
+            var isSelected = oEvent.getParameter("selected");
+            if (!isSelected) {
             }
         }
-        
+
         function handleSelectionFinish(oEvent) {
             let groups = [];
             groupsModel.setProperty("selectedGroups", []);
-			var selectedItems = oEvent.getParameter("selectedItems");
-			for (var i in selectedItems) {
-					groups.push(selectedItems[i].getKey());
+            var selectedItems = oEvent.getParameter("selectedItems");
+            for (var i in selectedItems) {
+                groups.push(selectedItems[i].getKey());
             }
             groupsModel.setProperty("/selectedGroups", groups);
             paramModel.setProperty("/groups", groups);
             _validateStep2Complete(this);
         }
 
-        function onValidateCurrency(oEvent){
+        function onValidateCurrency(oEvent) {
             const currency = currModel.getProperty("/selectedCurrency");
             paramModel.setProperty("/currency", currency);
             _validateStep2Complete(this);
         }
 
-        function onValidateDate(oEvent){
+        function onValidateDate(oEvent) {
             const oDP = oEvent.getSource()
-			const sValue = oEvent.getParameter("value");
+            const sValue = oEvent.getParameter("value");
             const bValid = oEvent.getParameter("valid");
-            if(bValid){
+            if (bValid) {
                 paramModel.setProperty("/date", sValue);
             }
-            else{
+            else {
                 paramModel.setProperty("/date", "");
             }
+            _validateStep2Complete(this);
         }
 
-        function _validateStep2Complete(that){
+        function _validateStep2Complete(that) {
 
             // that._wizard = that.byId("wizard");
             // this._oFirstStep = this._wizard.getSteps()[0];
@@ -116,18 +117,33 @@ sap.ui.define([
             const selectedCurrency = currModel.getProperty("/selectedCurrency");
             const params = paramModel.getData();
 
-            if( params.employeeName !== undefined && params.employeeName !== "" &&
+            if (params.employeeName !== undefined && params.employeeName !== "" &&
                 params.description !== undefined && params.description !== "" &&
                 params.date !== undefined && params.date !== "" &&
-                params.chart !== undefined &&  params.chart !== "" &&
+                params.chart !== undefined && params.chart !== "" &&
                 params.groups !== undefined && params.groups.length > 0 &&
-                params.currency !== undefined && params.currency !== "" ){
-                    that._oSecondStep.setValidated(true);
-                    that._wizard.goToStep(that._oThirdStep);
+                params.currency !== undefined && params.currency !== "") {
+                that._oSecondStep.setValidated(true);
+                that._wizard.goToStep(that._oThirdStep);
+            }
+            else {
+                that._oSecondStep.setValidated(false);
+            }
+        }
+
+        function aaa(oEvent) {
+            const fields = fieldsModel.getProperty("/fields");
+            let selectedFields = [];
+            const indices = this.getView().byId("fieldsTable").getSelectedIndices();
+            fieldsModel.setProperty("/selectedFields", []);
+            if (indices) {
+                for (let i in indices) {
+                    selectedFields.push(fields[i].id);
                 }
-                else{
-                    that._oSecondStep.setValidated(false);
-                }
+                fieldsModel.setProperty("/selectedFields", selectedFields);
+            }
+
+            const test = fieldsModel.getProperty("/selectedFields");
         }
 
         let Main = Controller.extend("egb.sapui5.controller.Main", {});
@@ -139,6 +155,7 @@ sap.ui.define([
         Main.prototype.onValidateChart = onValidateChart;
         Main.prototype.onValidateCurrency = onValidateCurrency;
         Main.prototype.onValidateDate = onValidateDate;
+        Main.prototype.aaa = aaa;
 
         return Main;
     });
