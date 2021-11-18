@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="descriptionDialog" contentWidth="600px">
+        <TextArea 
+            value="{paramModel>/description}"
+            valueLiveUpdate="false"
+            liveChange="onValidateStep1"
+            maxLength="150"
+            showExceededText="true"
+            class="sapUiTinyMargin"
+            width="90%"
+            height="90%"
+            editable="false"/>
+        <beginButton>
+            <Button text="{i18n>okShowDescripcion}" press="onOkDescriptionDialog"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

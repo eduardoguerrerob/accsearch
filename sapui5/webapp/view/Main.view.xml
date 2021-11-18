@@ -79,7 +79,8 @@
                             <Label text="´{i18n>/date}"/>
                             <DatePicker id="date"
                                 placeholder="{i18n>selectDate}"
-                                change="onValidateDate"/>
+                                change="onValidateDate"
+                                width="300px"/>
                         </form:SimpleForm>
                     </WizardStep>
                     <WizardStep id="step3"
@@ -93,22 +94,38 @@
                             </items>
                         </List>
                         -->
-                        <table:Table id="fieldsTable"
-                            rows="{fieldsModel>/fields}"
-                            selectionMode="MultiToggle"
-                            visibleRowCount="5"
-                            width="30%"
-                            rowSelectionChange="aaa">
-                            <table:columns>
-                                <table:Column width="11rem">
-                                    <Label text="{i18n>nameField}" />
-                                    <table:template>
-                                        <Text text="{fieldsModel>name}"
-                                            wrapping="false" />
-                                    </table:template>
-                                </table:Column>
-                            </table:columns>
-                        </table:Table>
+                        <FlexBox justifyContent="SpaceAround"
+                            alignItems="Center">
+                            <items>
+                                <HBox width="30%">
+                                    <table:Table id="fieldsTable"
+                                        rows="{fieldsModel>/fields}"
+                                        selectionMode="MultiToggle"
+                                        visibleRowCount="5"
+                                        rowSelectionChange="onValidateStep3">
+                                        <table:columns>
+                                            <table:Column width="11rem">
+                                                <Label text="{i18n>nameField}" />
+                                                <table:template>
+                                                    <Text text="{fieldsModel>name}"
+                                                        wrapping="false" />
+                                                </table:template>
+                                            </table:Column>
+                                        </table:columns>
+                                    </table:Table>
+                                </HBox>
+                                <HBox>
+                                    <FlexBox justifyContent="Center"
+                                        alignItems="Center"
+                                        width="70%">
+                                        <items>
+                                            <Button text="{i18n>showDescription}"
+                                                press="showDescriptionDialog"/>
+                                        </items>
+                                    </FlexBox>
+                                </HBox>
+                            </items>
+                        </FlexBox>
                     </WizardStep>
                     <WizardStep id="step4"
                         title="{i18n>step4}"

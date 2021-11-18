@@ -1,13 +1,15 @@
 // @ts-nocheck
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
+     * @param {typeof sap.ui.core.Fragment} Fragment
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, Fragment) {
         "use strict";
 
         const paramModel = new JSONModel();
@@ -131,7 +133,7 @@ sap.ui.define([
             }
         }
 
-        function aaa(oEvent) {
+        function onValidateStep3(oEvent) {
             const fields = fieldsModel.getProperty("/fields");
             let selectedFields = [];
             const indices = this.getView().byId("fieldsTable").getSelectedIndices();
@@ -146,6 +148,27 @@ sap.ui.define([
             const test = fieldsModel.getProperty("/selectedFields");
         }
 
+        function showDescriptionDialog(){
+            const oView = this.getView();
+            if(!this.byId("descriptionDialog")){
+                Fragment.load({
+                    id: oView.getId(),
+                    name: "egb.sapui5.fragment.descriptionDialog",
+                    controller: this
+                }).then(function(oDialog){
+                    oView.addDependent(oDialog);
+                    oDialog.open();
+                });
+            }
+            else{
+                this.byId("descriptionDialog").open();
+            }
+        }
+
+        function onOkDescriptionDialog(){
+            this.byId("descriptionDialog").close();
+        }
+
         let Main = Controller.extend("egb.sapui5.controller.Main", {});
         Main.prototype.onInit = onInit;
         Main.prototype.onBeforeRendering = onBeforeRendering;
@@ -155,7 +178,9 @@ sap.ui.define([
         Main.prototype.onValidateChart = onValidateChart;
         Main.prototype.onValidateCurrency = onValidateCurrency;
         Main.prototype.onValidateDate = onValidateDate;
-        Main.prototype.aaa = aaa;
+        Main.prototype.onValidateStep3 = onValidateStep3;
+        Main.prototype.showDescriptionDialog = showDescriptionDialog;
+        Main.prototype.onOkDescriptionDialog = onOkDescriptionDialog;
 
         return Main;
     });
