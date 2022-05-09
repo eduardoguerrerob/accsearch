@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+
+    <form:SimpleForm title="Datos generales"
+        editable="false"
+        layout="ResponsiveGridLayout">
+        <form:content>
+            <Label text="{i18n>employeeName}"/>
+            <Text text="{paramModel>/employeeName}" />
+            <Label text="{i18n>description}"/>
+            <TextArea editable="false"
+                value="{paramModel>/description}"
+                maxLength="150"
+                width="80%" />
+        </form:content>
+    </form:SimpleForm>
+
+    <form:SimpleForm title="Parámetros"
+        editable="false"
+        layout="ResponsiveGridLayout">
+        <form:content>
+            <Label text="{i18n>chartOfAccounts}"/>
+            <Text text="{paramModel>/chart}" />
+            <Label text="{i18n>accountGroups}"/>
+            <List items="{paramModel>/groups}">
+                <items>
+                    <ObjectListItem title="{paramModel>description}"/>
+                </items>
+            </List>
+        </form:content>
+    </form:SimpleForm>
+
+
+</core:FragmentDefinition>

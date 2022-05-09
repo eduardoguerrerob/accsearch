@@ -7,10 +7,10 @@
     xmlns:l="sap.ui.layout"
     xmlns="sap.m">
 
-    <Page id="page"
-        title="{i18n>title}">
-        <content>
-            <NavContainer id="wizardNavContainer">
+    <NavContainer id="wizardNavContainer">
+        <Page id="wizardContentPage"
+            title="{i18n>title}">
+            <content>
                 <Wizard id="wizard"
                     complete="wizardCompletedHandler"
                     finishButtonText="{i18n>finalBtn}">
@@ -18,6 +18,26 @@
                         title="{i18n>step1}"
                         validated="false">
                         <MessageStrip text="{i18n>step1message}"/>
+
+
+
+                        <!-- <FlexBox justifyContent="SpaceAround" alignItems="Center" width="100%" height="300px">
+                            <items>
+                                <HBox >
+                                    <Button text="1" type="Emphasized" class="sapUiSmallMarginEnd" />
+                                    <Button text="2" type="Reject" class="sapUiSmallMarginEnd" />
+                                    <Button text="3" type="Accept" />
+                                </HBox>
+                                <HBox >
+                                    <Button text="4" type="Emphasized" class="sapUiSmallMarginEnd" />
+                                    <Button text="5" type="Reject" class="sapUiSmallMarginEnd" />
+                                    <Button text="6" type="Accept" />
+                                </HBox>
+                            </items>
+                        </FlexBox> -->
+
+
+
                         <form:SimpleForm editable="true">
                             <Label text="{i18n>employeeName}"
                                 class="sapUiTinyMargin"/>
@@ -85,6 +105,7 @@
                     </WizardStep>
                     <WizardStep id="step3"
                         title="{i18n>step3}"
+                        complete="step3Complete"
                         validated="false">
                         <MessageStrip text="{i18n>step3message}"/>
                         <!-- 
@@ -127,15 +148,24 @@
                             </items>
                         </FlexBox>
                     </WizardStep>
-                    <WizardStep id="step4"
-                        title="{i18n>step4}"
-                        validated="false">
-                        <MessageStrip text="{i18n>step4message}"/>
-                        <Text text="PASO4"></Text>
-                    </WizardStep>
                 </Wizard>
-            </NavContainer>
-        </content>
-    </Page>
+            </content>
+        </Page>
+        <Page id="wizardReviewPage">
+            <content>
+                <core:Fragment fragmentName="egb.sapui5.fragment.review" type="XML"/>
+            </content>
+            <footer>
+                <Bar>
+                    <contentRight>
+                        <Button text="Generar Reporte"
+                            press="handleWizardSubmit"/>
+                        <Button text="Cancelar"
+                            press="handleWizardCancel"/>
+                    </contentRight>
+                </Bar>
+            </footer>
+        </Page>
+    </NavContainer>
 
 </mvc:View>

@@ -2,14 +2,16 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/m/MessageBox"
 ],
 	/**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      * @param {typeof sap.ui.model.json.JSONModel} JSONModel
      * @param {typeof sap.ui.core.Fragment} Fragment
+     * @param {typeof sap.m.MessageBox} MessageBox
      */
-    function (Controller, JSONModel, Fragment) {
+    function (Controller, JSONModel, Fragment, MessageBox) {
         "use strict";
 
         const paramModel = new JSONModel();
@@ -19,6 +21,9 @@ sap.ui.define([
         const fieldsModel = new JSONModel();
 
         function onInit() {
+            this._oNavContainer = this.byId("wizardNavContainer");
+            this._oWizardContentPage = this.byId("wizardContentPage");
+
             paramModel.loadData("./localService/mockdata/params.json", false);
             this.getView().setModel(paramModel, "paramModel");
 
@@ -80,7 +85,8 @@ sap.ui.define([
             groupsModel.setProperty("selectedGroups", []);
             var selectedItems = oEvent.getParameter("selectedItems");
             for (var i in selectedItems) {
-                groups.push(selectedItems[i].getKey());
+                const grpStr = '{"id":"'+ selectedItems[i].getKey() +'","description":"'+selectedItems[i].getText()+'"}'
+                groups.push(JSON.parse(grpStr));
             }
             groupsModel.setProperty("/selectedGroups", groups);
             paramModel.setProperty("/groups", groups);
@@ -143,6 +149,10 @@ sap.ui.define([
                     selectedFields.push(fields[i].id);
                 }
                 fieldsModel.setProperty("/selectedFields", selectedFields);
+                this._oThirdStep.setValidated(true);  
+            }
+            else {
+                this._oThirdStep.setValidated(false); 
             }
 
             const test = fieldsModel.getProperty("/selectedFields");
@@ -169,6 +179,32 @@ sap.ui.define([
             this.byId("descriptionDialog").close();
         }
 
+        function wizardCompletedHandler() {
+            this._oNavContainer.to(this.byId("wizardReviewPage"));
+        }
+
+        function step3Complete(){
+
+        }
+
+        function handleWizardSubmit(oEvent){
+            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("RouteResult");
+        }
+
+        function handleWizardCancel(oEvent){
+            MessageBox["warning"]("Confirma cancelación",{
+                 actions: [MessageBox.Action.YES, MessageBox.Action.NO],
+                 onClose: function(oAction){
+                     if(oAction === MessageBox.Action.YES){
+                        this._wizard.goToStep(this._oFirstStep);
+                        this._wizard.discardProgress(this._oFirstStep);
+                        this._oNavContainer.backToPage(this._oWizardContentPage.getId());
+                     }
+                 }.bind(this)
+            })
+        }
+
         let Main = Controller.extend("egb.sapui5.controller.Main", {});
         Main.prototype.onInit = onInit;
         Main.prototype.onBeforeRendering = onBeforeRendering;
@@ -181,6 +217,10 @@ sap.ui.define([
         Main.prototype.onValidateStep3 = onValidateStep3;
         Main.prototype.showDescriptionDialog = showDescriptionDialog;
         Main.prototype.onOkDescriptionDialog = onOkDescriptionDialog;
+        Main.prototype.wizardCompletedHandler = wizardCompletedHandler;
+        Main.prototype.step3Complete = step3Complete;
+        Main.prototype.handleWizardSubmit = handleWizardSubmit;
+        Main.prototype.handleWizardCancel = handleWizardCancel;
 
         return Main;
     });
