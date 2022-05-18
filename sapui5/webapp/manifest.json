@@ -69,7 +69,7 @@
           "bundleName": "egb.sapui5.i18n.i18n"
         }
       },
-      "": {
+      "northwind": {
         "dataSource": "northwind.svc",
         "preload": true,
         "settings": {

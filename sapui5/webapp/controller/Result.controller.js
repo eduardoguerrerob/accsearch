@@ -18,8 +18,11 @@ function (Controller, History, UIComponent, JSONModel) {
 
     return Controller.extend("egb.sapui5.controller.Result", {
         onInit: function () {
-            resultModel.loadData("./localService/mockdata/accountsResult.json", false);
-            this.getView().setModel(resultModel, "resultModel");
+            // resultModel.loadData("./localService/mockdata/accountsResult.json", false);
+            // this.getView().setModel(resultModel, "resultModel");
+
+            this.getView().setModel(this.getOwnerComponent().getModel('northwind'));
+            this.getView().byId("table0").rebindTable();
         },
 
         onNavBack: function() {
