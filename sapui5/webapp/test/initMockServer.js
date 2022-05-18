@@ -1,3 +1,4 @@
+// @ts-nocheck
 sap.ui.define([
     "../localService/mockserver",
     "sap/m/MessageBox"

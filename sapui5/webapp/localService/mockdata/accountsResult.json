@@ -1,0 +1,47 @@
+{
+    "d": {
+        "_count": "100",
+        "results": [
+            {
+                "account": "100001",
+                "chart": "CO01",
+                "company": "ACME",
+                "text": "Efectivo",
+                "description": "Efectivo corriente",
+                "category": "CASH",
+                "accblock": 0,
+                "compblock": 0
+            },
+            {
+                "account": "100002",
+                "chart": "CO01",
+                "company": "ACME",
+                "text": "Banco1",
+                "description": "Cuenta de ahorro",
+                "category": "GRP1",
+                "accblock": 0,
+                "compblock": 0
+            },
+            {
+                "account": "100003",
+                "chart": "CO01",
+                "company": "ACME",
+                "text": "Banco2",
+                "description": "Cuenta corriente",
+                "category": "GRP2",
+                "accblock": 0,
+                "compblock": 0
+            },
+            {
+                "account": "100004",
+                "chart": "CO01",
+                "company": "ACME",
+                "text": "Banco2",
+                "description": "Efectivo corriente 2",
+                "category": "GRP2",
+                "accblock": 0,
+                "compblock": 0
+            }
+        ]
+    }
+}
